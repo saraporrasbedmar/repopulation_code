@@ -1,0 +1,170 @@
+cosmo_constants:
+  G:
+    value: !!float 4.297e-06
+    unit: kpc * km2 / (Msun * s2)
+  H_0:
+    value: 67.7
+    unit: km / (s * Mpc)
+  rho_crit:
+    value: 135.73
+    unit: Msun / kpc3
+  delta_overdensity: 200.
+
+host:
+  density_profile: 'NFW'
+  R_vir:
+    value: 220
+    unit: kpc
+  r_s:
+    value: 20.0
+    unit: kpc
+  rho_0:
+    value: !!float 9.04e6
+    unit: Msun / kpc3
+  position_Earth:
+    value: [8.5, 0., 0.]
+    unit: kpc
+  
+  # Not always necessary, if unsure what it is for it is not important
+  Draco:
+    Mass:
+      value: 2.e8
+      unit: Msun
+    D_GC:
+      value: 80.
+      unit: kpc
+    Cdelta: 19.
+    percentage_accepted: 0.1
+    distance_subhalo_cutoff:
+      value: 1.
+      unit: kpc
+
+repopulations:
+  param_to_repopulate: Vmax
+  RangeMax: 120.
+  RangeMin: 0.5
+
+  number_iterations: 2
+  print_frequency: 1
+  verbose: True
+
+  save_full_repop: True
+  use_spherical_shells: False
+  number_highest: 2
+  allow_break_Roche: True
+  allow_engulf_Earth: True
+  params_to_order_by:
+    - Vmax
+    - D_GC
+
+  rng_seed: null
+
+  params_to_save:
+    Vmax:
+      unit: km / s
+#    Mass:
+#      unit: Msun
+    D_GC:
+      unit: kpc
+    formula_example:
+      formula: '1e17 * params[0] * Vmax'
+      params:
+        - 0.5
+        - !!float 2e7
+      variables:
+        'Vmax'
+      unit: Msun * km / s
+    R_t:
+      unit: kpc
+    R_s:
+      unit: kpc
+    Rmax:
+      unit: kpc
+    J_general_fromVmaxRmax_toRs_custom:
+      formula: J_general
+      unit: GeV2 / cm5
+      integrate_up_to: 'R_t'
+    J_custom2:
+      formula: J_general
+      unit: GeV2 / cm5
+      integrate_up_to: 'whole'
+    J_customUnit:
+      formula: J_general
+      unit: GeV2 / cm5
+      integrate_up_to: 0.15
+    J_customUnit2:
+      formula: J_general
+      unit: Msun2 / kpc5
+      integrate_up_to: 0.15
+    theta_s:
+      unit: degree
+
+configurations:
+
+  dmo_fragile:
+    internal_density_profile: 'NFW'
+    relation_Mass_Vmax: M200_from_VmaxRmax
+    use_Roche: True
+    Cv:
+      formula: '3e5 + Vmax.value'
+      params:
+        c0: 283862.7023
+        sigma_scatter: 0.297659
+        ci: [55., -0.195, 0.089, 0.089, -0.54]
+      variables:
+        'Vmax'
+
+    Cmass:
+      formula: 'C_200'
+      params:
+        c0: 283862.7023
+        sigma_scatter: 0.297659
+        ci: [55., -0.195, 0.089, 0.089, -0.54]
+    SHVF:
+      formula: 'power_law'
+      params:
+        V0: 5.68
+        slope: -3.92
+    SRD:
+      formula: 'srd_exponential'
+      params:
+        exp_fit:
+          - -0.151
+          - 39.3
+          - 220.0
+        last_subhalo:
+          value: 1.57
+          unit: kpc
+  dmo_fragile2:
+    internal_density_profile: 'NFW'
+    relation_Mass_Vmax: #M200_from_VmaxRmax
+    # We assume that the units here are Msun
+          formula: '8226.1 * xx ** 3.72'
+    use_Roche: True
+    Cv:
+      formula: 'Cv_Mol2021_redshift0_scattered'
+      params:
+        c0: 283862.7023
+        sigma_scatter: 0.297659
+        ci: [ 55., -0.195, 0.089, 0.089, -0.54 ]
+    Cmass:
+      formula: 'C_200'
+      params:
+        c0: 283862.7023
+        sigma_scatter: 0.297659
+        ci: [ 55., -0.195, 0.089, 0.089, -0.54 ]
+    SHVF:
+      formula: 'power_law'
+      params:
+        V0: 5.68
+        slope: -3.92
+    SRD:
+      formula: 'srd_exponential'
+      params:
+        exp_fit:
+          - -0.151
+          - 39.3
+          - 220.0
+        last_subhalo:
+          value: 1.57
+          unit: kpc
