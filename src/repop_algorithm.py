@@ -595,6 +595,12 @@ class RepopAlgorithm:
                     self.logging_info('All characterizations done.')
 
                     for key, array in self.subhalo_data.items():
+
+                        if (not self.input_dict['repopulations'][
+                            'save_intermediate_steps'] and
+                                key not in self.input_dict[
+                                    'repopulations']['params_to_save']):
+                            continue
                         if key not in iter_group.keys():
                             datasets[key] = iter_group.create_dataset(
                                 key,
@@ -732,6 +738,11 @@ class RepopAlgorithm:
                         highest_indexes = temp[:self._number_highest]
 
                         for key, array in highest_dict[ii].items():
+                            if (not self.input_dict['repopulations'][
+                                'save_intermediate_steps'] and
+                                    key not in self.input_dict[
+                                        'repopulations']['params_to_save']):
+                                continue
                             datasets[key] = (
                                 highest_group.create_dataset(
                                     key,
@@ -747,6 +758,12 @@ class RepopAlgorithm:
 
                     else:
                         for key, array in highest_dict[ii].items():
+
+                            if (not self.input_dict['repopulations'][
+                                'save_intermediate_steps'] and
+                                    key not in self.input_dict[
+                                        'repopulations']['params_to_save']):
+                                continue
                             datasets[key] = (
                                 highest_group.create_dataset(
                                     key,

@@ -48,7 +48,8 @@ repopulations:
   print_frequency: 1
   verbose: True
 
-  save_full_repop: True
+  save_full_repop: False
+  save_intermediate_steps: False
   use_spherical_shells: False
   number_highest: 2
   allow_break_Roche: True
@@ -74,10 +75,10 @@ repopulations:
       variables:
         'Vmax'
       unit: Msun * km / s
-    R_t:
-      unit: kpc
-    R_s:
-      unit: kpc
+#    R_t:
+#      unit: kpc
+#    R_s:
+#      unit: kpc
     Rmax:
       unit: kpc
     J_general_fromVmaxRmax_toRs_custom:
@@ -87,17 +88,17 @@ repopulations:
     J_custom2:
       formula: J_general
       unit: GeV2 / cm5
-      integrate_up_to: 'whole'
-    J_customUnit:
-      formula: J_general
-      unit: GeV2 / cm5
-      integrate_up_to: 0.15
-    J_customUnit2:
-      formula: J_general
-      unit: Msun2 / kpc5
-      integrate_up_to: 0.15
-    theta_s:
-      unit: degree
+      integrate_up_to: 'R_s'
+#    J_customUnit:
+#      formula: J_general
+#      unit: GeV2 / cm5
+#      integrate_up_to: 0.15
+#    J_customUnit2:
+#      formula: J_general
+#      unit: Msun2 / kpc5
+#      integrate_up_to: 0.15
+#    theta_s:
+#      unit: degree
 
 configurations:
 
